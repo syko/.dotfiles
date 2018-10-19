@@ -29,5 +29,5 @@
 [core]
   editor = vim
   quotepath = false
-  excludesfile = /Users/andrin/.gitignore_global
+  excludesfile = /home/syko/.dotfiles/linux_extra/.gitignore_global
   ignorecase = false
