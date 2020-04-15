@@ -55,7 +55,6 @@ source ~/.nvm/nvm.sh
 # To enable opening terminals and running commands after bashrc
 eval "$BASH_POST_RC"
 
-eval $(thefuck --alias)
 alias fuckyou='sudo !!'
 
 export PATH=./node_modules/.bin:$PATH
@@ -82,3 +81,27 @@ UNDERLINE=$(tput smul)
 PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
 # Set Titlebar and Prompt
 PS1='\[${CYAN}\]\u\[${NORMAL}\]@\[${YELLOW}\]`echo ${PWD} | sed -E "s/.*\\///"`\[${NORMAL}\]:\[${GREEN}\]`git rev-parse --abbrev-ref HEAD 2> /dev/null`\[${WHITE}\] \$ \[${NORMAL}\]'
+
+# Start ssh-agent automatically https://stackoverflow.com/questions/18880024/start-ssh-agent-on-login
+SSH_ENV="$HOME/.ssh/environment"
+
+function start_agent {
+    echo "Initialising new SSH agent..."
+    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+    echo succeeded
+    chmod 600 "${SSH_ENV}"
+    . "${SSH_ENV}" > /dev/null
+    /usr/bin/ssh-add;
+}
+
+# Source SSH settings, if applicable
+
+if [ -f "${SSH_ENV}" ]; then
+    . "${SSH_ENV}" > /dev/null
+    #ps ${SSH_AGENT_PID} doesn't work under cywgin
+    ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+        start_agent;
+    }
+else
+    start_agent;
+fi
