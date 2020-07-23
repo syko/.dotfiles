@@ -1,0 +1,8 @@
+Enable Filter Keys
+
+[HKEY_CURRENT_USER\Control Panel\Accessibility\Keyboard Response]
+"AutoRepeatDelay"="160"
+"AutoRepeatRate"="1"
+"DelayBeforeAcceptance"="0"
+"Flags"="27"
+"BounceTime"="0"
