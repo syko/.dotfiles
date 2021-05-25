@@ -1,12 +1,5 @@
 export PATH="$PATH:/$HOME/bin"
 
-# If ~./inputrc doesn't exist yet, first include the original /etc/inputrc and add case-insensitive tab completion 
-if [ ! -a ~/.inputrc ]; then
-  echo '$include /etc/inputrc' > ~/.inputrc;
-  # Add option to ~/.inputrc to enable case-insensitive tab completion
-  echo 'set completion-ignore-case On' >> ~/.inputrc
-fi
-
 alias ls='ls -G'
 alias grep='grep -G'
 alias fgrep='fgrep -G'
