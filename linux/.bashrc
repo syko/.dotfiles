@@ -75,6 +75,8 @@ PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
 # Set Titlebar and Prompt
 PS1='\[${CYAN}\]\u\[${NORMAL}\]@\[${YELLOW}\]`echo ${PWD} | sed -E "s/.*\\///"`\[${NORMAL}\]:\[${GREEN}\]`git rev-parse --abbrev-ref HEAD 2> /dev/null`\[${WHITE}\] \$ \[${NORMAL}\]'
 
+LS_COLORS="di=01;31;36:ow=01;31;36:fi=01;32:ln=01;33:mi=01;31:ex=01;32"
+
 # Start ssh-agent automatically https://stackoverflow.com/questions/18880024/start-ssh-agent-on-login
 SSH_ENV="$HOME/.ssh/environment"
 
