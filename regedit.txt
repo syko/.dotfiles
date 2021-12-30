@@ -6,3 +6,6 @@ Enable Filter Keys
 "DelayBeforeAcceptance"="0"
 "Flags"="27"
 "BounceTime"="0"
+
+[Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\HID\*\*\Device Parameters]
+"FlipFlopWheel"="1"
