@@ -1,4 +1,4 @@
-export PATH="$PATH:/$HOME/bin"
+export PATH="$PATH:/$HOME/bin:/home/$(whoami)/.local/bin"
 
 alias ls='ls -G --color'
 alias grep='grep -G'
