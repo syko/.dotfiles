@@ -43,7 +43,7 @@ alias get="bash -c 'git up'"
 alias gstash="git stash"
 alias gspop="git stash pop"
 alias tigs="tig stash"
-alias y="yarn start"
+alias y="yarn dev"
 alias h="yarn run hyperdev"
 
 source ~/.nvm/nvm.sh
