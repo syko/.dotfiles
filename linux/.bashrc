@@ -45,6 +45,7 @@ alias gspop="git stash pop"
 alias tigs="tig stash"
 alias y="yarn dev"
 alias h="yarn run hyperdev"
+alias dcup="docker compose up"
 
 source ~/.nvm/nvm.sh
 
