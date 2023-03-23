@@ -41,6 +41,7 @@ alias gprm='git co $(git_mbranch) && gpl && git co - && git rebase $(git_mbranch
 alias giddy="git"
 alias get="bash -c 'git up'"
 alias gstash="git stash"
+alias gsave="git stash push -m"
 alias gspop="git stash pop"
 alias tigs="tig stash"
 alias y="yarn dev"
