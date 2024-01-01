@@ -9,3 +9,9 @@ Enable Filter Keys
 
 [Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\HID\*\*\Device Parameters]
 "FlipFlopWheel"="1"
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\ZoneMap\ProtocolDefaults]
+@=""
+"http"=dword:00000000
+"ftp"=dword:00000000
+"file"=dword:00000000
