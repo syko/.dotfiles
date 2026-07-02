@@ -1,4 +1,9 @@
 [[ -r ~/.bashrc_syko ]] && . ~/.bashrc_syko
+[[ -r ~/.bashrc_device ]] && . ~/.bashrc_device
+
+HISTSIZE=10000
+SAVEHIST=10000
+HISTCONTROL=ignoreboth
 
 . "$HOME/.atuin/bin/env"
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh

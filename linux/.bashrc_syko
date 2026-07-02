@@ -51,7 +51,7 @@ alias y="yarn dev"
 alias h="yarn run hyperdev"
 alias dcup="docker compose up"
 
-source ~/.nvm/nvm.sh
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 # To enable opening terminals and running commands after bashrc
 eval "$BASH_POST_RC"
@@ -79,9 +79,9 @@ BLINK=$(tput blink)
 REVERSE=$(tput smso)
 UNDERLINE=$(tput smul)
 
-PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
 # Set Titlebar and Prompt
-PS1='\[${CYAN}\]\u\[${NORMAL}\]@\[${YELLOW}\]`echo ${PWD} | sed -E "s/.*\\///"`\[${NORMAL}\]:\[${GREEN}\]`git rev-parse --abbrev-ref HEAD 2> /dev/null`\[${WHITE}\] \$ \[${NORMAL}\]'
+#PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
+#PS1='\[${CYAN}\]\u\[${NORMAL}\]@\[${YELLOW}\]`echo ${PWD} | sed -E "s/.*\\///"`\[${NORMAL}\]:\[${GREEN}\]`git rev-parse --abbrev-ref HEAD 2> /dev/null`\[${WHITE}\] \$ \[${NORMAL}\]'
 
 export LS_COLORS="di=01;31;36:ow=01;31;36:fi=01;32:ln=01;33:mi=01;31:ex=01;32"
 
@@ -108,4 +108,8 @@ if [ -f "${SSH_ENV}" ]; then
 else
     start_agent;
 fi
+
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# May not work, see https://stackoverflow.com/questions/69427899/using-source-inside-zshrc-does-not-work
+source <(fzf --bash)
