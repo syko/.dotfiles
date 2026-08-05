@@ -1,9 +1,6 @@
 export PATH="$PATH:/$HOME/bin:/home/$(whoami)/.local/bin"
 
 alias ls='ls -G --color'
-alias grep='grep -G'
-alias fgrep='fgrep -G'
-alias egrep='egrep -G'
 alias ll='ls -alF'
 alias la='ls -lah --color'
 alias l='ls -CF'
@@ -27,6 +24,7 @@ alias gcam='git commit -am'
 alias gcamend='git commit --amend'
 alias glmb='gl `git merge-base $(git_mbranch) HEAD`..'
 alias ghreset='git reset --hard HEAD'
+alias ghresetall='git reset --hard HEAD && git clean -f'
 alias ghresetsoft='git reset --soft HEAD'
 alias ghresetmixed='git reset --soft HEAD'
 alias gundocommit='git reset --mixed HEAD~1'
@@ -44,12 +42,14 @@ alias gprm='git co $(git_mbranch) && gpl && git co - && git rebase $(git_mbranch
 alias giddy="git"
 alias get="bash -c 'git up'"
 alias gstash="git stash"
-alias gsave="git stash push -m"
+alias gsave="git stash push -u -m"
 alias gspop="git stash pop"
 alias tigs="tig stash"
 alias y="yarn dev"
 alias h="yarn run hyperdev"
 alias dcup="docker compose up"
+alias senv="source .env"
+alias slenv="source .local.env"
 
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
@@ -123,3 +123,10 @@ eval "$(zoxide init zsh)"
 
 . "$HOME/.atuin/bin/env"
 eval "$(atuin init zsh)"
+
+# Edit the current command line in vim with ctrl+x ctrl+e
+export EDITOR=vim
+export VISUAL=vim
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^X^E' edit-command-line

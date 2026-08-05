@@ -18,13 +18,3 @@ source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 bindkey '^ ' autosuggest-accept
 
-source '/home/linuxbrew/.linuxbrew/opt/autoenv/activate.sh'
-
-# Restore bare `cd` -> $HOME while keeping autoenv's .env sourcing
-cd() {
-	if [ "$#" -eq 0 ]; then
-		autoenv_cd "$HOME"
-	else
-		autoenv_cd "$@"
-	fi
-}

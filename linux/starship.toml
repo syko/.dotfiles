@@ -12,7 +12,9 @@ $directory\
 $vcsh\
 $fossil_branch\
 $fossil_metrics\
+${custom.worktree}\
 $git_branch\
+${custom.compose_port}\
 $git_commit\
 $git_state\
 $git_metrics\
@@ -115,6 +117,25 @@ format = '[$user]($style)@'
 
 [directory]
 truncation_length = 2
+
+[custom.compose_port]
+description = 'Host port of the supersimple-app (or -api) service in the nearest compose file'
+shell = ['bash', '--noprofile', '--norc']
+command = '~/.config/starship/compose-port.sh'
+when = '~/.config/starship/compose-port.sh'
+format = '[:$output ]($style)'
+style = 'bold blue'
+
+[custom.worktree]
+description = 'Shown when the cwd is a linked git worktree'
+shell = ['bash', '--noprofile', '--norc']
+command = 'echo 🌳'
+when = '''
+git_dir=$(git rev-parse --git-dir 2>/dev/null) || exit 1
+test "$git_dir" != "$(git rev-parse --git-common-dir 2>/dev/null)"
+'''
+format = '[$output  ]($style)'
+style = 'bold green'
 
 [git_branch]
 symbol = ''

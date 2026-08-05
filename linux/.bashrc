@@ -15,13 +15,5 @@ eval "$(atuin init bash)"
 # command_not_found_handle (the slow apt-DB scanner), adding ~0.5-0.8s/command.
 precmd()  { :; }
 preexec() { :; }
-source '/home/linuxbrew/.linuxbrew/opt/autoenv/activate.sh'
 
-# Restore bare `cd` -> $HOME while keeping autoenv's .env sourcing
-cd() {
-	if [ "$#" -eq 0 ]; then
-		autoenv_cd "$HOME"
-	else
-		autoenv_cd "$@"
-	fi
-}
+. "$HOME/.cargo/env"
