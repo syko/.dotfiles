@@ -1,3 +1,5 @@
+# Put in ~/.config/starship.toml
+
 add_newline = false
 
 format = """
