@@ -9,7 +9,6 @@ vim.g.maplocalleader = " "
 
 local o = vim.opt
 o.number = true
-o.relativenumber = true
 o.mouse = "a"
 o.clipboard = "unnamedplus"
 -- On WSL, talk to the Windows clipboard directly via win32yank
@@ -121,7 +120,74 @@ require("lazy").setup({
     opts = { keymap = { preset = "default" } } },
 
   -- Git signs in the gutter
-  { "lewis6991/gitsigns.nvim", opts = {} },
+  { "lewis6991/gitsigns.nvim",
+    opts = {
+      on_attach = function(bufnr)
+        local gs = require("gitsigns")
+        -- Jump between git changes; in diff mode keep the built-in ]c / [c
+        local function nav(key, direction)
+          vim.keymap.set("n", key, function()
+            if vim.wo.diff then
+              vim.cmd.normal({ key, bang = true })
+            else
+              gs.nav_hunk(direction)
+            end
+          end, { buffer = bufnr, desc = direction == "next" and "Next git change" or "Prev git change" })
+        end
+        nav("]c", "next")
+        nav("[c", "prev")
+      end,
+    } },
+
+  -- Scrollbar with diagnostics, git changes and search matches
+  { "lewis6991/satellite.nvim",
+    config = function()
+      require("satellite").setup({})
+      local view = require("satellite.view")
+
+      -- Scroll so the clicked spot on the bar (0 = top, last row = bottom)
+      -- maps to the same spot in the file, with the cursor in the middle
+      local function scroll_to_row(win, row)
+        local height = vim.api.nvim_win_get_height(win)
+        local total = vim.api.nvim_buf_line_count(vim.api.nvim_win_get_buf(win))
+        local max_top = math.max(total - height + 1, 1)
+        local ratio = math.min(math.max(row / math.max(height - 1, 1), 0), 1)
+        local top = math.floor(ratio * (max_top - 1) + 0.5) + 1
+        vim.api.nvim_win_call(win, function()
+          vim.fn.winrestview({ topline = top, lnum = math.min(top + math.floor(height / 2), total) })
+        end)
+        view.refresh_bars()
+        vim.cmd.redraw()
+      end
+
+      local function mouse_row(win)
+        return vim.fn.getmousepos().screenrow - vim.fn.win_screenpos(win)[1]
+      end
+
+      -- Satellite's own drag handling misses clicks by one row, so handle
+      -- the bar here: click anywhere on it to jump, hold and drag to scroll
+      vim.keymap.set({ "n", "v", "o", "i" }, "<LeftMouse>", function()
+        local pos = vim.fn.getmousepos()
+        local win = pos.winid
+        local on_bar = win ~= 0 and view.get_props(win) ~= nil
+          and pos.wincol >= vim.api.nvim_win_get_width(win) - 1
+          and pos.winrow >= 1 and pos.winrow <= vim.api.nvim_win_get_height(win)
+        if not on_bar then
+          vim.api.nvim_feedkeys(vim.keycode("<LeftMouse>"), "ni", false)
+          return
+        end
+        scroll_to_row(win, mouse_row(win))
+        while true do
+          local ok, key = pcall(vim.fn.getcharstr)
+          if not ok or key == vim.keycode("<LeftRelease>") then break end
+          if key ~= vim.keycode("<LeftDrag>") then
+            vim.api.nvim_feedkeys(key, "ni", false)
+            break
+          end
+          scroll_to_row(win, mouse_row(win))
+        end
+      end)
+    end },
 
   -- Shows pending keybinds as you type
   { "folke/which-key.nvim", event = "VeryLazy", opts = {} },
