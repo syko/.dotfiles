@@ -18,3 +18,6 @@ source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 bindkey '^ ' autosuggest-accept
 
+
+# WSL: never launch the Linux GUI browser; print URLs instead (see ~/.local/bin/www-browser)
+export BROWSER=www-browser
