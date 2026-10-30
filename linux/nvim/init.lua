@@ -139,6 +139,29 @@ require("lazy").setup({
       end,
     } },
 
+  -- Side-by-side git diff review with a changed-files panel
+  { "sindrets/diffview.nvim",
+    cmd = { "DiffviewOpen", "DiffviewFileHistory" },
+    keys = {
+      { "<leader>gd", function()
+          if require("diffview.lib").get_current_view() then
+            vim.cmd("DiffviewClose")
+          else
+            vim.cmd("DiffviewOpen")
+          end
+        end, desc = "Diffview toggle" },
+      { "<leader>gh", "<cmd>DiffviewFileHistory %<CR>", desc = "File history" },
+      { "<leader>gH", "<cmd>DiffviewFileHistory<CR>",   desc = "Repo history" },
+    },
+    opts = {
+      hooks = {
+        -- Show the whole file instead of folding unchanged lines (zM folds them again)
+        diff_buf_win_enter = function(_, winid)
+          vim.wo[winid].foldlevel = 99
+        end,
+      },
+    } },
+
   -- Scrollbar with diagnostics, git changes and search matches
   { "lewis6991/satellite.nvim",
     config = function()
